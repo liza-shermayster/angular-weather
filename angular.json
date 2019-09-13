@@ -60,6 +60,10 @@
           "options": {
             "browserTarget": "herolor-weather-page:build"
           },
+          "assets": [
+            "src/favicon.ico",
+            "src/assets"
+          ],
           "configurations": {
             "production": {
               "browserTarget": "herolor-weather-page:build:production"
@@ -115,6 +119,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "herolor-weather-page"
 }

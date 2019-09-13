@@ -1,0 +1,11 @@
+<app-search [options]="optionsData" (cityItem)="getCity($event)">
+</app-search>
+<h1>{{selectedCity.city}}</h1>
+<button mat-mini-fab aria-label="Example icon-button with a heart icon">
+  <mat-icon (click)="addToFavorites()">favorite</mat-icon>
+</button>
+
+<div class='card-container' *ngFor="let day of cityWeather?.DailyForecasts">
+  <app-card-weather [dayData]="day">
+  </app-card-weather>
+</div>

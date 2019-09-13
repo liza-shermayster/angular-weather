@@ -1,0 +1,11 @@
+.toolBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 40px;
+  width: 100%;
+}
+
+.button-navigation button+button {
+  margin-left: 1em;
+}

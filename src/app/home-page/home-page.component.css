@@ -1,0 +1,14 @@
+.card-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.card-container app-card-weather+app-card-weather {
+  margin-left: 1em;
+}
+
+.card-container app-card-weather {
+  margin-top: 1em;
+}
