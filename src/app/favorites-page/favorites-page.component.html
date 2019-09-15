@@ -1,1 +1,12 @@
 <p>favorites-page works!</p>
+<div class="favoritesCityCard"></div>
+<mat-card *ngIf="selectedCity.length>0" class="example-card">
+  <mat-card-content>
+    <div *ngFor="let item of selectedCity">
+      <h3>{{item.city}}</h3>
+      <button mat-button (click)='currentWeather(item)'>current weather</button>
+      <button mat-button (click)='removeFromFavorites(item)'>remove from favorites</button>
+    </div>
+  </mat-card-content>
+
+</mat-card>

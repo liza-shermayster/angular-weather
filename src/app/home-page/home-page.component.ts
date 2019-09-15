@@ -4,6 +4,9 @@ import { isNgTemplate } from '@angular/compiler';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Forcast } from '../forcast';
+import { FavoritesCityService } from '../favorites-city.service';
+import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/internal/operators/map';
 // import {default as serverWeaster} from '../assets/data'
 
 
@@ -14,14 +17,17 @@ import { Forcast } from '../forcast';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private favoritesCityService: FavoritesCityService, private route: ActivatedRoute) { }
   cityWeather: Forcast;
+  dataFromFavorites;
+  id;
+  getDataFromSearch;
 
   fetchCityWeather() {
     this.http.get('./assets/cityWeather.json')
       .subscribe((cityData: Forcast) => {
         this.cityWeather = cityData;
-        console.log(this.cityWeather);
+
       });
 
   }
@@ -29,10 +35,15 @@ export class HomePageComponent implements OnInit {
 
   ngOnInit() {
     this.fetchCityWeather();
+    console.log(this.route);
+    console.log('history data', history.state.data);
+
   }
 
   iconCode = '34';
   imgUrl = `https://developer.accuweather.com/sites/default/files/${this.iconCode}-s.png`;
+
+
 
   myData = [
     {
@@ -179,20 +190,23 @@ export class HomePageComponent implements OnInit {
     city: ''
   };
 
+  getCityData(key: string) {
+    this.http.get(name).pipe(
+      map(res => res)
+    );
+  }
+
+
   getCity(cityName) {
-    console.log('item', cityName);
-    const myObject = this.myData.find((cityData) => cityData.LocalizedName === cityName);
-    console.log('myObject', myObject);
+    this.getDataFromSearch = "http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=%0937aFnzhWyR6vlu9bzajjpPG1RoKf89oS&${cityName}"
+    const myObject = this.getDataFromSearch.find((cityData) => cityData.LocalizedName === cityName);
     this.selectedCity.key = myObject.Key;
     this.selectedCity.city = myObject.LocalizedName;
 
   }
-  favoritesCity = [];
 
   addToFavorites() {
-    this.favoritesCity.push({ ...this.selectedCity });
-    console.log('favorites city', this.favoritesCity);
-
+    this.favoritesCityService.addFavoritesCity({ ...this.selectedCity });
   }
 
 

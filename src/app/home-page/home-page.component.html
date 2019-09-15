@@ -5,7 +5,8 @@
   <mat-icon (click)="addToFavorites()">favorite</mat-icon>
 </button>
 
-<div class='card-container' *ngFor="let day of cityWeather?.DailyForecasts">
-  <app-card-weather [dayData]="day">
+
+<div class='card-container'>
+  <app-card-weather *ngFor="let day of cityWeather?.DailyForecasts" [dayData]="day">
   </app-card-weather>
 </div>
