@@ -91,7 +91,7 @@ export class HomePageComponent implements OnInit {
   onSearchChange(value: string) {
     const params = new HttpParams().set('q', value);
     const baseUrl = 'http://dataservice.accuweather.com/locations/v1/'
-    const apiSearch = `http://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=37aFnzhWyR6vlu9bzajjpPG1RoKf89oS`;
+    const apiSearch = `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=37aFnzhWyR6vlu9bzajjpPG1RoKf89oS`;
     this.http.get(apiSearch, { params }).subscribe((res: ForecastSearchItem[]) => {
       console.log('res from url ', res);
 
@@ -106,7 +106,7 @@ export class HomePageComponent implements OnInit {
     if (!this.selectedCity) {
       return;
     }
-    const apiForecastData = `http://dataservice.accuweather.com/forecasts/v1/daily/5day/
+    const apiForecastData = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/
     ${this.selectedCity.Key}?apikey=%0937aFnzhWyR6vlu9bzajjpPG1RoKf89oS`;
     this.http.get(apiForecastData).subscribe(res => {
       console.log('response from forecast', res);
