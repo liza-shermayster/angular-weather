@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 import { HomePageComponent } from './home-page/home-page.component';
+import { ForecastSearchItem } from './forcast';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FavoritesCityService {
-  favoritesCity = [];
-  citySubject = new BehaviorSubject<any>(this.favoritesCity);
+  favoritesCity: ForecastSearchItem[] = [];
+  citySubject = new BehaviorSubject<ForecastSearchItem[]>(this.favoritesCity);
 
   constructor() {
     this.citySubject.next([...this.favoritesCity]);
@@ -19,8 +20,8 @@ export class FavoritesCityService {
     return this.citySubject.asObservable();
   }
 
-  addFavoritesCity(item) {
-    const checkCity = this.favoritesCity.find((el) => el.city === item.city);
+  addFavoritesCity(item: ForecastSearchItem) {
+    const checkCity = this.favoritesCity.find((el) => el.LocalizedName === item.LocalizedName);
     if (!checkCity) {
       this.favoritesCity = [...this.favoritesCity, { ...item }];
     }
@@ -30,7 +31,7 @@ export class FavoritesCityService {
 
   removeFavoritesCity(item) {
 
-    this.favoritesCity = this.favoritesCity.filter((el) => el.city !== item.city);
+    this.favoritesCity = this.favoritesCity.filter((el) => el.LocalizedName !== item.LocalizedName);
     this.citySubject.next([...this.favoritesCity]);
   }
 }

@@ -13,6 +13,7 @@ export class SearchComponent implements OnInit {
 
   @Input() options = [];
   @Output() cityItem = new EventEmitter();
+  @Output() searchChange = new EventEmitter();
 
   filterOptions: Observable<string[]>;
   // options: string[] = myOptionsData.map((item) => item.LocalizedName);
@@ -20,21 +21,26 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.options);
-    this.filterOptions = this.myInputControl.valueChanges.pipe(
-      startWith(''),
-      map(this._filter.bind(this))
-    );
+    this.myInputControl.valueChanges.subscribe(value => {
+      console.log('value from input control change', value);
 
+      this.searchChange.emit(value);
+    });
 
+    // this.filterOptions = this.myInputControl.valueChanges.pipe(
+    //   startWith(''),
+    //   map(this._filter.bind(this))
+    // );
   }
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.options.filter((item) => item.toLowerCase().includes(filterValue)
-    );
-  }
+  // private _filter(value: string): string[] {
+  //   const filterValue = value.toLowerCase();
+  //   return this.options.filter((item) => item.toLowerCase().includes(filterValue)
+  //   );
+  // }
 
   onSelection() {
     this.cityItem.emit(this.myInputControl.value);
+    this.myInputControl.setValue(this.myInputControl.value.LocalizedName);
   }
 
 

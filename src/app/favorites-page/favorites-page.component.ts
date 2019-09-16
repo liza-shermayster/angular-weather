@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FavoritesCityService } from '../favorites-city.service';
 import { Router } from '@angular/router';
+import { ForecastSearchItem } from '../forcast';
 @Component({
   selector: 'app-favorites-page',
   templateUrl: './favorites-page.component.html',
@@ -9,20 +10,17 @@ import { Router } from '@angular/router';
 export class FavoritesPageComponent implements OnInit {
 
   cityFromSubscription;
-  selectedCity;
+  favoritesCites: ForecastSearchItem[];
   constructor(private getFavoritesCity: FavoritesCityService, private router: Router) {
-    this.cityFromSubscription = this.getFavoritesCity.getCity().subscribe((data) => {
+    this.cityFromSubscription = this.getFavoritesCity.getCity().subscribe((data: ForecastSearchItem[]) => {
       console.log('data', data);
-
-      this.selectedCity = data;
-
-
+      this.favoritesCites = data;
     });
   }
 
   ngOnInit() {
   }
-  removeFromFavorites(item) {
+  removeFromFavorites(item: ForecastSearchItem) {
     this.getFavoritesCity.removeFavoritesCity({ ...item });
   }
 

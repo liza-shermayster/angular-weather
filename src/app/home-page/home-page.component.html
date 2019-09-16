@@ -1,12 +1,12 @@
-<app-search [options]="optionsData" (cityItem)="getCity($event)">
+<app-search [options]="optionsData" (cityItem)="getCity($event)" (searchChange)="onSearchChange($event)">
 </app-search>
-<h1>{{selectedCity.city}}</h1>
+<h1>{{selectedCity?.LocalizedName}}</h1>
 <button mat-mini-fab aria-label="Example icon-button with a heart icon">
   <mat-icon (click)="addToFavorites()">favorite</mat-icon>
 </button>
 
 
 <div class='card-container'>
-  <app-card-weather *ngFor="let day of cityWeather?.DailyForecasts" [dayData]="day">
+  <app-card-weather *ngFor="let day of forecastData?.DailyForecasts" [dayData]="day">
   </app-card-weather>
 </div>

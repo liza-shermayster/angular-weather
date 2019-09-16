@@ -43,3 +43,17 @@ export interface Headline {
   MobileLink: string;
   Link: string;
 }
+export interface ForecastSearchItem {
+  Version: number;
+  Key: string;
+  Type: string;
+  Rank: number;
+  LocalizedName: string;
+  Country: Country;
+  AdministrativeArea: Country;
+}
+
+interface Country {
+  ID: string;
+  LocalizedName: string;
+}
