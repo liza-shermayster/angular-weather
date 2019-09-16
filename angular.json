@@ -117,6 +117,10 @@
               "devServerTarget": "herolor-weather-page:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {}
         }
       }
     }
