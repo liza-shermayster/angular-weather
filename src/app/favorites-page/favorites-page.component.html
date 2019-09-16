@@ -2,8 +2,8 @@
   <mat-card *ngFor="let item of favoritesCites" class="example-card">
     <mat-card-content>
       <h3>{{item.LocalizedName}}</h3>
-      <button mat-button (click)='currentWeather(item)'>current weather</button>
-      <button mat-button (click)='removeFromFavorites(item)'>remove from favorites</button>
+      <button mat-button (click)='currentWeather(item)' class="currentItem">current weather</button>
+      <button mat-button (click)='removeFromFavorites(item)' class="removeItem">remove from favorites</button>
     </mat-card-content>
 
   </mat-card>

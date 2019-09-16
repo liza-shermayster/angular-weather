@@ -5,8 +5,10 @@
   <mat-icon (click)="addToFavorites()">favorite</mat-icon>
 </button>
 
-
-<div class='card-container'>
+<div class='card-container' *ngIf="!error">
   <app-card-weather *ngFor="let day of forecastData?.DailyForecasts" [dayData]="day">
   </app-card-weather>
+</div>
+<div *ngIf="error" class='card-container'>
+  <h1>An Error Occurred!</h1>
 </div>

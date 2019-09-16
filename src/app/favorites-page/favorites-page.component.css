@@ -20,3 +20,12 @@
   flex-direction: column;
   align-items: center;
 }
+
+.currentItem {
+  background-color: cornflowerblue;
+  margin-bottom: 12px;
+}
+
+.removeItem {
+  background-color: #ffd740
+}

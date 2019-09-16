@@ -41,6 +41,9 @@ export class HomePageComponent implements OnInit {
   optionsData: ForecastSearchItem[];
   forecastData;
   optionsFilteredData;
+  error = null;
+
+
 
 
   fetchCityWeather() {
@@ -74,37 +77,20 @@ export class HomePageComponent implements OnInit {
 
   }
 
-
-
-
-
   getCity(cityObject: ForecastSearchItem) {
     console.log('get from search', cityObject);
     this.selectedCity = cityObject;
-
-    // const myObject = this.getDataFromSearch.find((cityData) => cityData.LocalizedName === cityName);
-    // this.selectedCity.key = myObject.Key;
-    // this.selectedCity.city = myObject.LocalizedName;
-
   }
 
   addToFavorites() {
     this.favoritesCityService.addFavoritesCity({ ...this.selectedCity });
   }
 
-  // getSearchResults(value: string) {
-  //   const params = new HttpParams().set('q', value);
-  //   const apiSearch = `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=37aFnzhWyR6vlu9bzajjpPG1RoKf89oS`;
-  //   return this.http.get(apiSearch, { params });
-  // }
-
   onSearchChange(value: string) {
     this.getDataFromApi.getSearchResults(value).subscribe((res: ForecastSearchItem[]) => {
       console.log('res from url ', res);
       this.optionsData = res;
       this.getForecastObject();
-    }, error => {
-
     });
   }
 
@@ -115,6 +101,8 @@ export class HomePageComponent implements OnInit {
     this.getDataFromApi.getForecastData(this.selectedCity.Key).subscribe(res => {
       console.log('response from forecast', res);
       this.forecastData = res;
+    }, error => {
+      this.error = error.message;
     });
   }
 
