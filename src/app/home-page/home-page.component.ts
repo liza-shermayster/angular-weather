@@ -41,7 +41,8 @@ export class HomePageComponent implements OnInit {
   optionsData: ForecastSearchItem[];
   forecastData;
   optionsFilteredData;
-  error = null;
+  searchError = null;
+  forecastError = null;
 
 
 
@@ -91,6 +92,9 @@ export class HomePageComponent implements OnInit {
       console.log('res from url ', res);
       this.optionsData = res;
       this.getForecastObject();
+    }, error => {
+      this.searchError = error.message;
+      setTimeout(() => this.searchError = null, 2000);
     });
   }
 
@@ -102,11 +106,7 @@ export class HomePageComponent implements OnInit {
       console.log('response from forecast', res);
       this.forecastData = res;
     }, error => {
-      this.error = error.message;
+      this.forecastError = error.message;
     });
   }
-
-
-
-
 }

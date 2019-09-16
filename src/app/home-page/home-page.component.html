@@ -1,14 +1,18 @@
-<app-search [options]="optionsData" (cityItem)="getCity($event)" (searchChange)="onSearchChange($event)">
+<app-search *ngIf="!searchError" [options]="optionsData" (cityItem)="getCity($event)"
+  (searchChange)="onSearchChange($event)">
 </app-search>
+<div *ngIf="searchError" class="card-container">
+  <p>Have a problem with search city!</p>
+</div>
 <h1 class="showCityName">{{selectedCity?.LocalizedName}}</h1>
 <button mat-mini-fab aria-label="Example icon-button with a heart icon" class="buttonLike">
   <mat-icon (click)="addToFavorites()">favorite</mat-icon>
 </button>
 
-<div class='card-container' *ngIf="!error">
+<div class='card-container' *ngIf="!forecastError">
   <app-card-weather *ngFor="let day of forecastData?.DailyForecasts" [dayData]="day">
   </app-card-weather>
 </div>
-<div *ngIf="error" class='card-container'>
-  <h1>An Error Occurred!</h1>
+<div *ngIf="forecastError" class='card-container'>
+  <h1>Can not fetch forecast data!</h1>
 </div>
