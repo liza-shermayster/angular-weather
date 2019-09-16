@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
@@ -9,10 +9,16 @@ import { Observable } from 'rxjs';
 export class AccuWeatherApiService {
 
   constructor(private http: HttpClient) { }
-  searchCity(): Observable<Object> {
-    return this.http.get('/assets/search-city.json');
+
+  getSearchResults(value: string) {
+    const params = new HttpParams().set('q', value);
+    const apiSearch = `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=37aFnzhWyR6vlu9bzajjpPG1RoKf89oS`;
+    return this.http.get(apiSearch, { params });
   }
-  searchSpecialCity(): Observable<Object> {
-    return this.http.get('/assets/cityWeather.json');
+
+  getForecastData(key) {
+    const apiForecastData = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/
+      ${key}?apikey=%0937aFnzhWyR6vlu9bzajjpPG1RoKf89oS`;
+    return this.http.get(apiForecastData);
   }
 }

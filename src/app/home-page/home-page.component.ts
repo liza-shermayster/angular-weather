@@ -5,6 +5,7 @@ import { map } from 'rxjs/internal/operators/map';
 import { FavoritesCityService } from '../favorites-city.service';
 import { Forcast, ForecastSearchItem } from '../forcast';
 import { Observable } from 'rxjs';
+import { AccuWeatherApiService } from '../accu-weather-api.service';
 
 
 const telAvivSearchData = {
@@ -30,7 +31,9 @@ const telAvivSearchData = {
 })
 export class HomePageComponent implements OnInit {
 
-  constructor(private http: HttpClient, private favoritesCityService: FavoritesCityService, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private favoritesCityService: FavoritesCityService,
+    private route: ActivatedRoute,
+    private getDataFromApi: AccuWeatherApiService) { }
   cityWeather: Forcast;
   dataFromFavorites;
   id;
@@ -89,14 +92,14 @@ export class HomePageComponent implements OnInit {
     this.favoritesCityService.addFavoritesCity({ ...this.selectedCity });
   }
 
-  getSearchResults(value: string) {
-    const params = new HttpParams().set('q', value);
-    const apiSearch = `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=37aFnzhWyR6vlu9bzajjpPG1RoKf89oS`;
-    return this.http.get(apiSearch, { params });
-  }
+  // getSearchResults(value: string) {
+  //   const params = new HttpParams().set('q', value);
+  //   const apiSearch = `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=37aFnzhWyR6vlu9bzajjpPG1RoKf89oS`;
+  //   return this.http.get(apiSearch, { params });
+  // }
 
   onSearchChange(value: string) {
-    this.getSearchResults(value).subscribe((res: ForecastSearchItem[]) => {
+    this.getDataFromApi.getSearchResults(value).subscribe((res: ForecastSearchItem[]) => {
       console.log('res from url ', res);
       this.optionsData = res;
       this.getForecastObject();
@@ -109,13 +112,13 @@ export class HomePageComponent implements OnInit {
     if (!this.selectedCity) {
       return;
     }
-    const apiForecastData = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/
-    ${this.selectedCity.Key}?apikey=%0937aFnzhWyR6vlu9bzajjpPG1RoKf89oS`;
-    this.http.get(apiForecastData).subscribe(res => {
+    this.getDataFromApi.getForecastData(this.selectedCity.Key).subscribe(res => {
       console.log('response from forecast', res);
       this.forecastData = res;
     });
   }
+
+
 
 
 }
