@@ -35,34 +35,11 @@ export class HomePageComponent implements OnInit {
     private route: ActivatedRoute,
     private getDataFromApi: AccuWeatherApiService) { }
   cityWeather: Forcast;
-  dataFromFavorites;
-  id;
   selectedCity: ForecastSearchItem;
   optionsData: ForecastSearchItem[];
   forecastData;
-  optionsFilteredData;
   searchError = null;
   forecastError = null;
-
-
-
-
-  fetchCityWeather() {
-    this.http.get('./assets/cityWeather.json')
-      .subscribe((cityData: Forcast) => {
-        this.cityWeather = cityData;
-
-      });
-
-  }
-  getCityData(key: string) {
-    this.http.get(name).pipe(
-      map(res => res)
-    );
-  }
-
-
-
 
   ngOnInit() {
     if (history.state.data) {
@@ -70,12 +47,7 @@ export class HomePageComponent implements OnInit {
     } else {
       this.selectedCity = telAvivSearchData;
     }
-    // this.fetchCityWeather();
     this.getForecastObject();
-
-    console.log(this.route);
-    console.log('history data', history.state.data);
-
   }
 
   getCity(cityObject: ForecastSearchItem) {
