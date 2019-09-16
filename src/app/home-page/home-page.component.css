@@ -12,3 +12,13 @@
 .card-container app-card-weather {
   margin-top: 1em;
 }
+
+.showCityName {
+  display: flex;
+  justify-content: center;
+}
+
+.buttonLike {
+  display: block;
+  margin: auto;
+}

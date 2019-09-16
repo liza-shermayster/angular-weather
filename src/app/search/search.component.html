@@ -1,6 +1,6 @@
-<div class="searchField">
+<div>
   <form>
-    <mat-form-field>
+    <mat-form-field class="searchField">
       <input type="text" placeholder="search city" aria-label="Text" matInput [matAutocomplete]="auto"
         [formControl]="this.myInputControl">
       <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelection()">

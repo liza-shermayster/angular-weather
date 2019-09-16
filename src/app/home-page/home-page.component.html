@@ -1,7 +1,7 @@
 <app-search [options]="optionsData" (cityItem)="getCity($event)" (searchChange)="onSearchChange($event)">
 </app-search>
-<h1>{{selectedCity?.LocalizedName}}</h1>
-<button mat-mini-fab aria-label="Example icon-button with a heart icon">
+<h1 class="showCityName">{{selectedCity?.LocalizedName}}</h1>
+<button mat-mini-fab aria-label="Example icon-button with a heart icon" class="buttonLike">
   <mat-icon (click)="addToFavorites()">favorite</mat-icon>
 </button>
 

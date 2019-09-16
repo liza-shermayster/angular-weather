@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/internal/operators/map';
 import { FavoritesCityService } from '../favorites-city.service';
 import { Forcast, ForecastSearchItem } from '../forcast';
+import { Observable } from 'rxjs';
 
 
 const telAvivSearchData = {
@@ -88,16 +89,18 @@ export class HomePageComponent implements OnInit {
     this.favoritesCityService.addFavoritesCity({ ...this.selectedCity });
   }
 
-  onSearchChange(value: string) {
+  getSearchResults(value: string) {
     const params = new HttpParams().set('q', value);
-    const baseUrl = 'http://dataservice.accuweather.com/locations/v1/'
     const apiSearch = `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=37aFnzhWyR6vlu9bzajjpPG1RoKf89oS`;
-    this.http.get(apiSearch, { params }).subscribe((res: ForecastSearchItem[]) => {
-      console.log('res from url ', res);
+    return this.http.get(apiSearch, { params });
+  }
 
+  onSearchChange(value: string) {
+    this.getSearchResults(value).subscribe((res: ForecastSearchItem[]) => {
+      console.log('res from url ', res);
       this.optionsData = res;
-      // this.optionsFilteredData = this.optionsData.map((item) => item.LocalizedName);
       this.getForecastObject();
+    }, error => {
 
     });
   }

@@ -7,3 +7,9 @@
 .example-full-width {
   width: 100%;
 }
+
+.searchField {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

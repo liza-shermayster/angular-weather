@@ -9,3 +9,15 @@
 .button-navigation button+button {
   margin-left: 1em;
 }
+
+.mat-raised-button {
+  background-color: #ffd740;
+}
+
+.mat-button-wrapper {
+  color: black
+}
+
+.mat-toolbar {
+  background-color: cornflowerblue;
+}
