@@ -51,7 +51,7 @@ export class HomePageComponent implements OnInit {
   }
 
   getCity(cityObject: ForecastSearchItem) {
-    console.log('get from search', cityObject);
+
     this.selectedCity = cityObject;
   }
 
@@ -61,7 +61,7 @@ export class HomePageComponent implements OnInit {
 
   onSearchChange(value: string) {
     this.getDataFromApi.getSearchResults(value).subscribe((res: ForecastSearchItem[]) => {
-      console.log('res from url ', res);
+
       this.optionsData = res;
       this.getForecastObject();
     }, error => {

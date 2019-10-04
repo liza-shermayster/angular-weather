@@ -25,7 +25,7 @@ export class FavoritesPageComponent implements OnInit {
   }
 
   currentWeather(item) {
-    console.log(item);
+
     this.router.navigate(['/home'], { state: { data: item } });
 
   }
