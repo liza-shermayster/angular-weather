@@ -6,6 +6,9 @@ import { FavoritesCityService } from '../favorites-city.service';
 import { Forcast, ForecastSearchItem } from '../forcast';
 import { Observable } from 'rxjs';
 import { AccuWeatherApiService } from '../accu-weather-api.service';
+import { Store } from '@ngrx/store';
+import * as fromApp from "../store/app.reducer";
+import * as HomeActions from "./store/home.actions";
 
 
 const telAvivSearchData = {
@@ -30,16 +33,17 @@ const telAvivSearchData = {
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-
-  constructor(private http: HttpClient, private favoritesCityService: FavoritesCityService,
-    private route: ActivatedRoute,
-    private getDataFromApi: AccuWeatherApiService) { }
   cityWeather: Forcast;
   selectedCity: ForecastSearchItem;
   optionsData: ForecastSearchItem[];
   forecastData;
   searchError = null;
   forecastError = null;
+
+  constructor(private favoritesCityService: FavoritesCityService,
+    private getDataFromApi: AccuWeatherApiService,
+    private store: Store<fromApp.AppState>) { }
+
 
   ngOnInit() {
     if (history.state.data) {
@@ -56,7 +60,9 @@ export class HomePageComponent implements OnInit {
   }
 
   addToFavorites() {
-    this.favoritesCityService.addFavoritesCity({ ...this.selectedCity });
+
+    this.store.dispatch(new HomeActions.AddToFavorites({ ...this.selectedCity }));
+    // this.favoritesCityService.addFavoritesCity({ ...this.selectedCity });
   }
 
   onSearchChange(value: string) {
@@ -75,7 +81,6 @@ export class HomePageComponent implements OnInit {
       return;
     }
     this.getDataFromApi.getForecastData(this.selectedCity.Key).subscribe(res => {
-      console.log('response from forecast', res);
       this.forecastData = res;
     }, error => {
       this.forecastError = error.message;

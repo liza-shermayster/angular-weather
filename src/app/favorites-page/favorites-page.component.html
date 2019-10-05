@@ -1,5 +1,5 @@
 <div class="favoritesCityCard">
-  <mat-card *ngFor="let item of favoritesCites" class="example-card">
+  <mat-card *ngFor="let item of favoritesCites |async" class="example-card">
     <mat-card-content>
       <h3>{{item.LocalizedName}}</h3>
       <button mat-button (click)='currentWeather(item)' class="currentItem">current weather</button>

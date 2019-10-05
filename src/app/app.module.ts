@@ -14,7 +14,8 @@ import { SearchComponent } from './search/search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AccuWeatherApiService } from './accu-weather-api.service';
-
+import { StoreModule } from '@ngrx/store';
+import * as fromApp from "./store/app.reducer"
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { AccuWeatherApiService } from './accu-weather-api.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    StoreModule.forRoot(fromApp.appReducer)
 
 
   ],
