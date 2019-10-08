@@ -16,6 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AccuWeatherApiService } from './accu-weather-api.service';
 import { StoreModule } from '@ngrx/store';
 import * as fromApp from "./store/app.reducer"
+import { EffectsModule } from '@ngrx/effects';
+import { HomeEffects } from './home-page/store/home.effects';
 
 @NgModule({
   declarations: [
@@ -35,9 +37,8 @@ import * as fromApp from "./store/app.reducer"
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    StoreModule.forRoot(fromApp.appReducer)
-
-
+    StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot([HomeEffects])
   ],
   providers: [AccuWeatherApiService],
   bootstrap: [AppComponent]

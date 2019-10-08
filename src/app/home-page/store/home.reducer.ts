@@ -1,20 +1,54 @@
 import { HomeActions, HomeActionTypes } from './home.actions';
-import { ForecastSearchItem } from 'src/app/forcast';
+import { ForecastSearchItem, Forecast } from 'src/app/forcast';
+
+
+
+const telAvivSearchData = {
+  Version: 1,
+  Key: '215854',
+  Type: 'City',
+  Rank: 31,
+  LocalizedName: 'Tel Aviv',
+  Country: {
+    ID: 'IL',
+    LocalizedName: 'Israel'
+  },
+  AdministrativeArea: {
+    ID: 'TA',
+    LocalizedName: 'Tel Aviv'
+  }
+};
 
 export interface State {
-  favorites: ForecastSearchItem[]
+  searchItems: ForecastSearchItem[];
+  forecastData: Forecast | null;
+  selectedCity: ForecastSearchItem;
 };
 
 const initialState: State = {
-  favorites: []
+  searchItems: [],
+  forecastData: null,
+  selectedCity: telAvivSearchData
 };
 
 export function reducer(state = initialState, action: HomeActions): State {
   switch (action.type) {
-    case HomeActionTypes.AddToFavorites: {
+    case HomeActionTypes.SaveSearchData: {
       return {
         ...state,
-        favorites: [...state.favorites, action.payload]
+        searchItems: [...action.payload]
+      };
+    }
+    case HomeActionTypes.SaveForecastData: {
+      return {
+        ...state,
+        forecastData: action.payload
+      };
+    }
+    case HomeActionTypes.SetCityItem: {
+      return {
+        ...state,
+        selectedCity: action.payload
       };
     }
 

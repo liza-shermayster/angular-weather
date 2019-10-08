@@ -1,16 +1,18 @@
-<app-search *ngIf="!searchError" [options]="optionsData" (cityItem)="getCity($event)"
+<app-search *ngIf="!searchError" [options]="optionsData | async" (cityItem)="setCity($event)"
   (searchChange)="onSearchChange($event)">
 </app-search>
 <div *ngIf="searchError" class="card-container">
   <p>Have a problem with search city!</p>
 </div>
-<h1 class="showCityName">{{selectedCity?.LocalizedName}}</h1>
+<h1 class="showCityName">{{(selectedCity | async)?.LocalizedName  }}</h1>
 <button mat-mini-fab aria-label="Example icon-button with a heart icon" class="buttonLike">
-  <mat-icon (click)="addToFavorites()">favorite</mat-icon>
+  <ng-container *ngIf="(selectedCity | async) as city">
+    <mat-icon (click)="addToFavorites(city)">favorite</mat-icon>
+  </ng-container>
 </button>
 
 <div class='card-container' *ngIf="!forecastError">
-  <app-card-weather *ngFor="let day of forecastData?.DailyForecasts" [dayData]="day">
+  <app-card-weather *ngFor="let day of (cityWeather | async)?.DailyForecasts" [dayData]="day">
   </app-card-weather>
 </div>
 <div *ngIf="forecastError" class='card-container'>

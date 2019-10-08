@@ -6,6 +6,9 @@ import * as fromApp from '../store/app.reducer';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
+import * as FavoritesActions from "../favorites-page/store/favorites.actions";
+import * as HomeActions from "../home-page/store/home.actions";
+
 
 @Component({
   selector: 'app-favorites-page',
@@ -18,22 +21,17 @@ export class FavoritesPageComponent implements OnInit {
   favoritesCites: Observable<ForecastSearchItem[]>;
   constructor(private getFavoritesCity: FavoritesCityService, private router: Router,
     private store: Store<fromApp.AppState>) {
-    // this.cityFromSubscription = this.getFavoritesCity.getCity().subscribe((data: ForecastSearchItem[]) => {
-    //   console.log('data', data);
-    //   this.favoritesCites = data;
-    // });
   }
 
   ngOnInit() {
-    this.favoritesCites = this.store.select('home').pipe(map(data => data.favorites));
+    this.favoritesCites = this.store.select('favorites').pipe(map(data => data.favorites));
   }
   removeFromFavorites(item: ForecastSearchItem) {
-    this.getFavoritesCity.removeFavoritesCity({ ...item });
+    this.store.dispatch(new FavoritesActions.RemoveFromFavorites({ ...item }));
   }
 
   currentWeather(item) {
-
-    this.router.navigate(['/home'], { state: { data: item } });
-
+    this.store.dispatch(new HomeActions.SetCityItem({ ...item }));
+    this.router.navigate(['/home']);
   }
 }

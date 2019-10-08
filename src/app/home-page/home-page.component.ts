@@ -1,31 +1,18 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/internal/operators/map';
 import { FavoritesCityService } from '../favorites-city.service';
-import { Forcast, ForecastSearchItem } from '../forcast';
-import { Observable } from 'rxjs';
+import { Forecast, ForecastSearchItem } from '../forcast';
 import { AccuWeatherApiService } from '../accu-weather-api.service';
 import { Store } from '@ngrx/store';
 import * as fromApp from "../store/app.reducer";
+import * as FavoritesActions from "../favorites-page/store/favorites.actions";
+import { HomeActionTypes } from './store/home.actions';
 import * as HomeActions from "./store/home.actions";
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
-const telAvivSearchData = {
-  Version: 1,
-  Key: '215854',
-  Type: 'City',
-  Rank: 31,
-  LocalizedName: 'Tel Aviv',
-  Country: {
-    ID: 'IL',
-    LocalizedName: 'Israel'
-  },
-  AdministrativeArea: {
-    ID: 'TA',
-    LocalizedName: 'Tel Aviv'
-  }
-};
+
 
 @Component({
   selector: 'app-home-page',
@@ -33,57 +20,33 @@ const telAvivSearchData = {
   styleUrls: ['./home-page.component.css']
 })
 export class HomePageComponent implements OnInit {
-  cityWeather: Forcast;
-  selectedCity: ForecastSearchItem;
-  optionsData: ForecastSearchItem[];
-  forecastData;
+  cityWeather: Observable<Forecast>;
+  selectedCity: Observable<ForecastSearchItem>;
+  optionsData: Observable<ForecastSearchItem[]>;
   searchError = null;
   forecastError = null;
 
-  constructor(private favoritesCityService: FavoritesCityService,
-    private getDataFromApi: AccuWeatherApiService,
+  constructor(
     private store: Store<fromApp.AppState>) { }
 
 
   ngOnInit() {
-    if (history.state.data) {
-      this.selectedCity = history.state.data;
-    } else {
-      this.selectedCity = telAvivSearchData;
-    }
-    this.getForecastObject();
+    this.store.dispatch(new HomeActions.InitHomeData());
+    const state = this.store.select('home');
+    this.selectedCity = state.pipe(map(data => data.selectedCity));
+    this.cityWeather = state.pipe(map(data => data.forecastData));
+    this.optionsData = state.pipe(map(data => data.searchItems));
   }
 
-  getCity(cityObject: ForecastSearchItem) {
-
-    this.selectedCity = cityObject;
+  setCity(cityObject: ForecastSearchItem) {
+    this.store.dispatch(new HomeActions.SetCityItem({ ...cityObject }));
   }
 
-  addToFavorites() {
-
-    this.store.dispatch(new HomeActions.AddToFavorites({ ...this.selectedCity }));
-    // this.favoritesCityService.addFavoritesCity({ ...this.selectedCity });
+  addToFavorites(cityItem: ForecastSearchItem) {
+    this.store.dispatch(new FavoritesActions.AddToFavorites({ ...cityItem }));
   }
 
   onSearchChange(value: string) {
-    this.getDataFromApi.getSearchResults(value).subscribe((res: ForecastSearchItem[]) => {
-
-      this.optionsData = res;
-      this.getForecastObject();
-    }, error => {
-      this.searchError = error.message;
-      setTimeout(() => this.searchError = null, 2000);
-    });
-  }
-
-  getForecastObject() {
-    if (!this.selectedCity) {
-      return;
-    }
-    this.getDataFromApi.getForecastData(this.selectedCity.Key).subscribe(res => {
-      this.forecastData = res;
-    }, error => {
-      this.forecastError = error.message;
-    });
+    this.store.dispatch(new HomeActions.GetSearchOptions(value));
   }
 }

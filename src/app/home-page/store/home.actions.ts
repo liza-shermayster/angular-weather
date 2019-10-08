@@ -1,36 +1,64 @@
 import { Action } from '@ngrx/store';
-import { ForecastSearchItem } from 'src/app/forcast';
+import { ForecastSearchItem, Forecast } from 'src/app/forcast';
 
 /**
  * For each action type in an action group, make a simple
  * enum object for all of this group's action types.
  */
 export enum HomeActionTypes {
-  AddToFavorites = '[Home] AddToFavorites',
-  // Verb2 = '[Home] Verb2'
-}
+  GetSearchOptions = '[Home] GetSearchOptions ',
+  GetForecastData = '[Home] GetForecastData',
+  SetCityItem = '[Home] SetCityItem',
+  SaveSearchData = '[Home] SaveSearchData',
+  SaveForecastData = '[Home] SaveForecastData',
+  InitHomeData = '[Home] InitHomeData'
+};
 
 /**
  * Every action is comprised of at least a type and an optional
  * payload. Expressing actions as classes enables powerful
  * type checking in reducer functions.
  */
-export class AddToFavorites implements Action {
-  readonly type = HomeActionTypes.AddToFavorites;
+export class GetSearchOptions implements Action {
+  readonly type = HomeActionTypes.GetSearchOptions;
+
+  constructor(public payload: string) { }
+}
+
+export class GetForecastData implements Action {
+  readonly type = HomeActionTypes.GetForecastData;
+
+  constructor(public payload: string) { }
+}
+
+export class SetCityItem implements Action {
+  readonly type = HomeActionTypes.SetCityItem;
 
   constructor(public payload: ForecastSearchItem) { }
 }
 
-// export class Verb2 implements Action {
-//   readonly type = HomeActionTypes.Verb2;
+export class SaveSearchData implements Action {
+  readonly type = HomeActionTypes.SaveSearchData;
 
-//   constructor(public payload: payloadType2) { }
-// }
+  constructor(public payload: ForecastSearchItem[]) { }
+}
 
-/**
- * Export a type alias of all actions in this action group
- * so that reducers can easily compose action types
- */
+
+export class SaveForecastData implements Action {
+  readonly type = HomeActionTypes.SaveForecastData;
+
+  constructor(public payload: Forecast) { }
+}
+
+export class InitHomeData implements Action {
+  readonly type = HomeActionTypes.InitHomeData;
+}
+
 export type HomeActions
-  = AddToFavorites;
-            // | Verb2;
+  = GetSearchOptions
+  | GetForecastData
+  | SetCityItem
+  | SaveSearchData
+  | SaveForecastData
+  | InitHomeData;
+

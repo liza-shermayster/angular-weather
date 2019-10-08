@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Forecast } from './forcast';
 
 
 
@@ -16,9 +18,9 @@ export class AccuWeatherApiService {
     return this.http.get(apiSearch, { params });
   }
 
-  getForecastData(key) {
+  getForecastData(key: string): Observable<Forecast> {
     const apiForecastData = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/
       ${key}?apikey=%097ezBvNlInHdoA3Q8spin0UktJnU7w3ut`;
-    return this.http.get(apiForecastData);
+    return this.http.get<Forecast>(apiForecastData);
   }
 }

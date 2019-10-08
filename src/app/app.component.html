@@ -4,12 +4,16 @@
       <h3>My Weather</h3>
     </div>
     <div class='button-navigation'>
-      <button mat-raised-button>
-        <a routerLink="/home">Home</a>
-      </button>
-      <button mat-raised-button>
-        <a routerLink="/favorites">Favorites</a>
-      </button>
+      <a routerLink="/home">
+        <button mat-raised-button>
+          Home
+        </button>
+      </a>
+      <a routerLink="/favorites">
+        <button [disabled]="!(favoritesLength | async)" mat-raised-button>
+          Favorites
+        </button>
+      </a>
     </div>
   </nav>
 </mat-toolbar>

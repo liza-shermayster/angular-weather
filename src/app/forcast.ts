@@ -1,5 +1,5 @@
 
-export interface Forcast {
+export interface Forecast {
   Headline: Headline;
   DailyForecasts: DailyForecast[];
 }
