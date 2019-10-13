@@ -1,8 +1,10 @@
-<app-search *ngIf="!searchError" [options]="optionsData | async" (cityItem)="setCity($event)"
-  (searchChange)="onSearchChange($event)">
-</app-search>
-<div *ngIf="searchError" class="card-container">
-  <p>Have a problem with search city!</p>
+<div *ngIf="!(getError |async)">
+  <app-search [options]="optionsData | async" (cityItem)="setCity($event)" (searchChange)="onSearchChange($event)">
+  </app-search>
+</div>
+<div *ngIf="(getError| async)" class="card-container">
+  <h3>{{getError|async}}</h3>
+  <!-- <p>Have a problem with search city!</p> -->
 </div>
 <h1 class="showCityName">{{(selectedCity | async)?.LocalizedName  }}</h1>
 

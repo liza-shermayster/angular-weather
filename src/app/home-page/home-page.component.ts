@@ -39,11 +39,12 @@ export class HomePageComponent implements OnInit {
 
     console.log('ngOnInit-home');
     this.favoritesCites = this.store.select('favorites').pipe(map(data => data.favorites));
+    this.getError = this.store.select('home').pipe(map(data => data.errorMessage));
     const state = this.store.select('home');
     this.selectedCity = state.pipe(map(data => data.selectedCity));
     this.cityWeather = state.pipe(map(data => data.forecastData));
     this.optionsData = state.pipe(map(data => data.searchItems));
-    // this.getError = this.store.select('home').pipe(map(data => data.errorMessage));
+
     this.isInFavorites = combineLatest(this.favoritesCites, this.selectedCity)
       .pipe(
         map(([favorites, city]) => {
@@ -66,11 +67,9 @@ export class HomePageComponent implements OnInit {
   }
 
   onSearchChange(value: string) {
-    // if (this.getError) {
-    //   alert(this.getError);
-    // } else {
+
     this.store.dispatch(new HomeActions.GetSearchOptions(value));
-    // }
+
   }
 
 }

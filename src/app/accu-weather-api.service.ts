@@ -14,19 +14,19 @@ export class AccuWeatherApiService {
 
   getSearchResults(value: string) {
     const params = new HttpParams().set('q', value);
-    const apiSearch = `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=	7ezBvNlInHdoA3Q8spin0UktJnU7w3ut`;
+    const apiSearch = `https://dataservice.accuweather.com/locations/v1/cities/autocomplete?apikey=	BfxNVAAFg5Svr2R3IiYzxAPqOUpu0c4t`;
     return this.http.get(apiSearch, { params });
   }
 
   getForecastData(key: string): Observable<Forecast> {
     const apiForecastData = `https://dataservice.accuweather.com/forecasts/v1/daily/5day/
-      ${key}?apikey=%097ezBvNlInHdoA3Q8spin0UktJnU7w3ut`;
+      ${key}?apikey=%09BfxNVAAFg5Svr2R3IiYzxAPqOUpu0c4t`;
     return this.http.get<Forecast>(apiForecastData);
   }
 
   getCityFromGeoPosition(location) {
     const localPosition = `http://dataservice.accuweather.com/locations/v1/cities/geoposition/
-    search?apikey=%097ezBvNlInHdoA3Q8spin0UktJnU7w3ut&${location}`;
+    search?apikey=%09BfxNVAAFg5Svr2R3IiYzxAPqOUpu0c4t&${location}`;
     return this.http.get<ForecastSearchItem>(localPosition);
   }
 }

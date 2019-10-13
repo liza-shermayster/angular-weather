@@ -36,25 +36,27 @@ export class HomeEffects {
           map((data: ForecastSearchItem[]) => {
             return new SaveSearchData(data);
           }),
-          // catchError(errorRes => {
+          catchError(errorRes => {
+            console.log('catch error', errorRes);
 
-          //   return this.returnError(errorRes);
-          //   // const errorMessage = 'can not get list of cities';
-          //   // if (!errorRes.error || !errorRes.error.error) {
-          //   //   return of(new HomeErrors(errorMessage));
-          //   // }
-          //   // return of(new HomeErrors(errorMessage));
-          // })
+
+            // return this.returnError(errorRes);
+            const errorMessage = 'can not get list of cities';
+            // if (!errorRes.error || !errorRes.error.error) {
+            //   return of(new HomeErrors(errorMessage));
+            // }
+            return of(new HomeErrors(errorMessage));
+          })
         );
     }));
 
-  returnError(err) {
-    const errorMessage = 'An unknown error occurred!';
-    if (!err.error || !err.error.error) {
-      return of(new HomeErrors(errorMessage));
-    }
-    return of(new HomeErrors(errorMessage));
-  }
+  // returnError(err) {
+  //   const errorMessage = 'An unknown error occurred!';
+  //   if (!err.error || !err.error.error) {
+  //     return of(new HomeErrors(errorMessage));
+  //   }
+  //   return of(new HomeErrors(errorMessage));
+  // }
 
   @Effect()
   homeForecastData$: Observable<Action> = this.actions$.pipe(ofType(HomeActionTypes.SetCityItem),
