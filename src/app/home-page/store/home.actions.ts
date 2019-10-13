@@ -7,12 +7,14 @@ import { ForecastSearchItem, Forecast } from 'src/app/forcast';
  */
 export enum HomeActionTypes {
   GetSearchOptions = '[Home] GetSearchOptions ',
-  GetForecastData = '[Home] GetForecastData',
   SetCityItem = '[Home] SetCityItem',
   SaveSearchData = '[Home] SaveSearchData',
   SaveForecastData = '[Home] SaveForecastData',
-  InitHomeData = '[Home] InitHomeData'
-};
+  InitHomeData = '[Home] InitHomeData',
+  InitGeolocationData = '[Home] InitGeolocationData',
+  GetCoords = '[Home] GetCoords',
+  HomeErrors = '[Home] HomeErrors'
+}
 
 /**
  * Every action is comprised of at least a type and an optional
@@ -21,12 +23,6 @@ export enum HomeActionTypes {
  */
 export class GetSearchOptions implements Action {
   readonly type = HomeActionTypes.GetSearchOptions;
-
-  constructor(public payload: string) { }
-}
-
-export class GetForecastData implements Action {
-  readonly type = HomeActionTypes.GetForecastData;
 
   constructor(public payload: string) { }
 }
@@ -54,11 +50,26 @@ export class InitHomeData implements Action {
   readonly type = HomeActionTypes.InitHomeData;
 }
 
+
+export class GetCoords implements Action {
+  readonly type = HomeActionTypes.GetCoords;
+
+}
+
+export class HomeErrors implements Action {
+  readonly type = HomeActionTypes.HomeErrors;
+  constructor(public payload: string) { }
+}
+
+
+
+
 export type HomeActions
   = GetSearchOptions
-  | GetForecastData
   | SetCityItem
   | SaveSearchData
   | SaveForecastData
-  | InitHomeData;
+  | InitHomeData
+  | GetCoords
+  | HomeErrors;
 

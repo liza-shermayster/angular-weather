@@ -1,15 +1,14 @@
 
-import { Component, OnInit } from '@angular/core';
-import { FavoritesCityService } from '../favorites-city.service';
-import { Forecast, ForecastSearchItem } from '../forcast';
-import { AccuWeatherApiService } from '../accu-weather-api.service';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as fromApp from "../store/app.reducer";
-import * as FavoritesActions from "../favorites-page/store/favorites.actions";
-import { HomeActionTypes } from './store/home.actions';
-import * as HomeActions from "./store/home.actions";
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import * as FavoritesActions from "../favorites-page/store/favorites.actions";
+import { Forecast, ForecastSearchItem } from '../forcast';
+import * as fromApp from "../store/app.reducer";
+import * as HomeActions from "./store/home.actions";
+
+
 
 
 
@@ -17,7 +16,8 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.css']
+  styleUrls: ['./home-page.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomePageComponent implements OnInit {
   cityWeather: Observable<Forecast>;
@@ -25,17 +25,32 @@ export class HomePageComponent implements OnInit {
   optionsData: Observable<ForecastSearchItem[]>;
   searchError = null;
   forecastError = null;
+  favoritesCites: Observable<ForecastSearchItem[]>;
+  isInFavorites: Observable<boolean>;
+  getError;
 
   constructor(
-    private store: Store<fromApp.AppState>) { }
+    private store: Store<fromApp.AppState>) {
+    this.store.dispatch(new HomeActions.InitHomeData());
+  }
 
 
   ngOnInit() {
-    this.store.dispatch(new HomeActions.InitHomeData());
+
+    console.log('ngOnInit-home');
+    this.favoritesCites = this.store.select('favorites').pipe(map(data => data.favorites));
     const state = this.store.select('home');
     this.selectedCity = state.pipe(map(data => data.selectedCity));
     this.cityWeather = state.pipe(map(data => data.forecastData));
     this.optionsData = state.pipe(map(data => data.searchItems));
+    // this.getError = this.store.select('home').pipe(map(data => data.errorMessage));
+    this.isInFavorites = combineLatest(this.favoritesCites, this.selectedCity)
+      .pipe(
+        map(([favorites, city]) => {
+          console.log('in favorites', !!favorites.find(c => c.Key === city.Key));
+          return !!favorites.find(c => c.Key === city.Key);
+        }));
+
   }
 
   setCity(cityObject: ForecastSearchItem) {
@@ -46,7 +61,16 @@ export class HomePageComponent implements OnInit {
     this.store.dispatch(new FavoritesActions.AddToFavorites({ ...cityItem }));
   }
 
-  onSearchChange(value: string) {
-    this.store.dispatch(new HomeActions.GetSearchOptions(value));
+  removeFromFavoritesCites(cityItem) {
+    this.store.dispatch(new FavoritesActions.RemoveFromFavorites({ ...cityItem }));
   }
+
+  onSearchChange(value: string) {
+    // if (this.getError) {
+    //   alert(this.getError);
+    // } else {
+    this.store.dispatch(new HomeActions.GetSearchOptions(value));
+    // }
+  }
+
 }

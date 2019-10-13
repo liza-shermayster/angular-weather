@@ -18,6 +18,8 @@ import { StoreModule } from '@ngrx/store';
 import * as fromApp from "./store/app.reducer"
 import { EffectsModule } from '@ngrx/effects';
 import { HomeEffects } from './home-page/store/home.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,11 @@ import { HomeEffects } from './home-page/store/home.effects';
     ReactiveFormsModule,
     HttpClientModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([HomeEffects])
+    EffectsModule.forRoot([HomeEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    })
   ],
   providers: [AccuWeatherApiService],
   bootstrap: [AppComponent]

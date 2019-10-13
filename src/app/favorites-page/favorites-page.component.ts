@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FavoritesCityService } from '../favorites-city.service';
 import { Router } from '@angular/router';
 import { ForecastSearchItem } from '../forcast';
@@ -13,7 +13,8 @@ import * as HomeActions from "../home-page/store/home.actions";
 @Component({
   selector: 'app-favorites-page',
   templateUrl: './favorites-page.component.html',
-  styleUrls: ['./favorites-page.component.css']
+  styleUrls: ['./favorites-page.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FavoritesPageComponent implements OnInit {
 

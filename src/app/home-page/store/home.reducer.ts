@@ -22,13 +22,15 @@ const telAvivSearchData = {
 export interface State {
   searchItems: ForecastSearchItem[];
   forecastData: Forecast | null;
-  selectedCity: ForecastSearchItem;
+  selectedCity: ForecastSearchItem | null;
+  // errorMessage: string;
 };
 
 const initialState: State = {
   searchItems: [],
   forecastData: null,
-  selectedCity: telAvivSearchData
+  selectedCity: null,
+  // errorMessage: null
 };
 
 export function reducer(state = initialState, action: HomeActions): State {
@@ -51,6 +53,12 @@ export function reducer(state = initialState, action: HomeActions): State {
         selectedCity: action.payload
       };
     }
+    // case HomeActionTypes.HomeErrors: {
+    //   return {
+    //     ...state,
+    //     errorMessage: action.payload
+    //   };
+    // }
 
     default: {
       return state;
