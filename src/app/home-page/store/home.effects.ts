@@ -7,6 +7,7 @@ import { ForecastSearchItem } from 'src/app/forcast';
 import { AccuWeatherApiService } from '../../accu-weather-api.service';
 import * as fromApp from "../../store/app.reducer";
 import { GetSearchOptions, HomeActionTypes, SaveForecastData, SaveSearchData, SetCityItem, HomeErrors } from './home.actions';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 
@@ -37,26 +38,20 @@ export class HomeEffects {
             return new SaveSearchData(data);
           }),
           catchError(errorRes => {
-            console.log('catch error', errorRes);
-
-
-            // return this.returnError(errorRes);
             const errorMessage = 'can not get list of cities';
-            // if (!errorRes.error || !errorRes.error.error) {
-            //   return of(new HomeErrors(errorMessage));
-            // }
             return of(new HomeErrors(errorMessage));
           })
         );
     }));
 
-  // returnError(err) {
-  //   const errorMessage = 'An unknown error occurred!';
-  //   if (!err.error || !err.error.error) {
-  //     return of(new HomeErrors(errorMessage));
-  //   }
-  //   return of(new HomeErrors(errorMessage));
-  // }
+  @Effect({ dispatch: false })
+  homeError$ = this.actions$.pipe(
+    ofType(HomeActionTypes.HomeErrors),
+    tap((errorAction: HomeErrors) => {
+      this.snackBar.open(errorAction.payload, 'close', { duration: 5000 });
+    })
+  );
+
 
   @Effect()
   homeForecastData$: Observable<Action> = this.actions$.pipe(ofType(HomeActionTypes.SetCityItem),
@@ -82,7 +77,7 @@ export class HomeEffects {
   constructor(
     private actions$: Actions,
     private serviceApi: AccuWeatherApiService,
-    private store: Store<fromApp.AppState>
+    private snackBar: MatSnackBar
   ) { }
 
 
