@@ -2,12 +2,7 @@
   <app-search [options]="optionsData | async" (cityItem)="setCity($event)" (searchChange)="onSearchChange($event)">
   </app-search>
 </div>
-<!-- <div *ngIf="getError| async as error" class="card-container">
-  <h3>{{error}}</h3>
-</div> -->
 <h1 class="showCityName">{{(selectedCity | async)?.LocalizedName  }}</h1>
-
-
 <ng-container *ngIf="selectedCity | async as city">
   <button *ngIf="!(isInFavorites | async)" (click)="addToFavorites(city)" mat-mini-fab
     aria-label="Example icon-button with a heart icon" class="buttonLike">
@@ -18,17 +13,6 @@
     <mat-icon>remove</mat-icon>
   </button>
 </ng-container>
-<!-- <h3>remove from favorite list</h3> -->
-
-<!-- <ng-template #addToFavoritesList>
-  <button mat-mini-fab aria-label="Example icon-button with a heart icon" class="buttonLike">
-    <ng-container *ngIf="(selectedCity | async) as city">
-
-    </ng-container>
-  </button>
-  <h3>add to favorite list</h3>
-</ng-template> -->
-
 <div class='card-container' *ngIf="!forecastError">
   <app-card-weather *ngFor="let day of (cityWeather | async)?.DailyForecasts" [dayData]="day">
   </app-card-weather>

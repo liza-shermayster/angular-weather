@@ -7,12 +7,6 @@ import * as FavoritesActions from "../favorites-page/store/favorites.actions";
 import { Forecast, ForecastSearchItem } from '../forcast';
 import * as fromApp from "../store/app.reducer";
 import * as HomeActions from "./store/home.actions";
-
-
-
-
-
-
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -34,10 +28,9 @@ export class HomePageComponent implements OnInit {
     this.store.dispatch(new HomeActions.InitHomeData());
   }
 
-
   ngOnInit() {
 
-    console.log('ngOnInit-home');
+
     this.favoritesCites = this.store.select('favorites').pipe(map(data => data.favorites));
     this.getError = this.store.select('home').pipe(map(data => data.errorMessage));
     const state = this.store.select('home');
@@ -48,10 +41,8 @@ export class HomePageComponent implements OnInit {
     this.isInFavorites = combineLatest(this.favoritesCites, this.selectedCity)
       .pipe(
         map(([favorites, city]) => {
-          console.log('in favorites', !!favorites.find(c => c.Key === city.Key));
           return !!favorites.find(c => c.Key === city.Key);
         }));
-
   }
 
   setCity(cityObject: ForecastSearchItem) {
@@ -67,9 +58,6 @@ export class HomePageComponent implements OnInit {
   }
 
   onSearchChange(value: string) {
-
     this.store.dispatch(new HomeActions.GetSearchOptions(value));
-
   }
-
 }
