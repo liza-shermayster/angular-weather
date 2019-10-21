@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DailyForecast } from '../forcast';
+import { DailyForecast } from '../../forcast';
 
 
 @Component({

@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'temperatureConverterPipe'
+  name: 'temperatureConverter'
 })
-export class TemperatureConverterPipePipe implements PipeTransform {
+export class TemperatureConverterPipe implements PipeTransform {
 
   transform(value: number) {
 

@@ -4,7 +4,7 @@
   </mat-card-header>
   <mat-card-content>
     <img mat-card-image [src]="imgUrl" alt="Photo of a weather">
-    <h3>Min temperature: {{dayData.Temperature.Minimum.Value| temperatureConverterPipe}}</h3>
-    <h3>Max temperature: {{dayData.Temperature.Maximum.Value| temperatureConverterPipe}}</h3>
+    <h3>Min temperature: {{dayData.Temperature.Minimum.Value| temperatureConverter}}</h3>
+    <h3>Max temperature: {{dayData.Temperature.Maximum.Value| temperatureConverter}}</h3>
   </mat-card-content>
 </mat-card>

@@ -1,4 +1,4 @@
-import { TemperatureConverterPipePipe } from './temperature-converter-pipe.pipe';
+import { TemperatureConverterPipePipe } from '../pipes/temperature-converter.pipe';
 
 describe('TemperatureConverterPipePipe', () => {
   it('create an instance', () => {
