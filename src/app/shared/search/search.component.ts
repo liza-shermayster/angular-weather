@@ -16,7 +16,6 @@ export class SearchComponent implements OnInit {
   myInputControl = new FormControl('');
 
   ngOnInit() {
-    console.log(this.options);
     this.myInputControl.valueChanges.subscribe(value => {
       this.searchChange.emit(value);
     });

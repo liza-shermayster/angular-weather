@@ -1,13 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FavoritesCityService } from '../favorites-city.service';
 import { Router } from '@angular/router';
-import { ForecastSearchItem } from '../forcast';
+import { ForecastSearchItem } from '../forecast.model';
 import * as fromApp from '../store/app.reducer';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
 import { map } from 'rxjs/operators';
-import * as FavoritesActions from "../favorites-page/store/favorites.actions";
-import * as HomeActions from "../home-page/store/home.actions";
+import * as FavoritesActions from '../favorites-page/store/favorites.actions';
+import * as HomeActions from '../home-page/store/home.actions';
 
 
 @Component({
@@ -17,10 +16,8 @@ import * as HomeActions from "../home-page/store/home.actions";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FavoritesPageComponent implements OnInit {
-
-  cityFromSubscription;
   favoritesCites: Observable<ForecastSearchItem[]>;
-  constructor(private getFavoritesCity: FavoritesCityService, private router: Router,
+  constructor(private router: Router,
     private store: Store<fromApp.AppState>) {
   }
 

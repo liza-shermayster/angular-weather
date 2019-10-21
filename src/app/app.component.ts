@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import * as fromApp from "./store/app.reducer";
-import { Observable } from 'rxjs';
+import * as fromApp from './store/app.reducer';
 import { map } from 'rxjs/internal/operators/map';
+import { Observable } from 'rxjs/internal/Observable';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { map } from 'rxjs/internal/operators/map';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'herolor-weather-page';
+  title = 'herolo-weather-page';
   favoritesLength: Observable<number>;
   constructor(private store: Store<fromApp.AppState>) { }
   ngOnInit() {

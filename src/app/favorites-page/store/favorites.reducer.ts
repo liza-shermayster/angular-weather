@@ -1,5 +1,5 @@
 import { FavoritesActions, FavoritesActionTypes } from './favorites.actions';
-import { ForecastSearchItem } from 'src/app/forcast';
+import { ForecastSearchItem } from 'src/app/forecast.model';
 
 export interface State {
   favorites: ForecastSearchItem[];

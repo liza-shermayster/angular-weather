@@ -1,12 +1,11 @@
-
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as FavoritesActions from "../favorites-page/store/favorites.actions";
-import { Forecast, ForecastSearchItem } from '../forcast';
-import * as fromApp from "../store/app.reducer";
-import * as HomeActions from "./store/home.actions";
+import * as FavoritesActions from '../favorites-page/store/favorites.actions';
+import { Forecast, ForecastSearchItem } from '../forecast.model';
+import * as fromApp from '../store/app.reducer';
+import * as HomeActions from './store/home.actions';
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
@@ -21,7 +20,7 @@ export class HomePageComponent implements OnInit {
   forecastError = null;
   favoritesCites: Observable<ForecastSearchItem[]>;
   isInFavorites: Observable<boolean>;
-  getError;
+
 
   constructor(
     private store: Store<fromApp.AppState>) {
@@ -29,15 +28,11 @@ export class HomePageComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
     this.favoritesCites = this.store.select('favorites').pipe(map(data => data.favorites));
-    this.getError = this.store.select('home').pipe(map(data => data.errorMessage));
     const state = this.store.select('home');
     this.selectedCity = state.pipe(map(data => data.selectedCity));
     this.cityWeather = state.pipe(map(data => data.forecastData));
     this.optionsData = state.pipe(map(data => data.searchItems));
-
     this.isInFavorites = combineLatest(this.favoritesCites, this.selectedCity)
       .pipe(
         map(([favorites, city]) => {
@@ -53,7 +48,7 @@ export class HomePageComponent implements OnInit {
     this.store.dispatch(new FavoritesActions.AddToFavorites({ ...cityItem }));
   }
 
-  removeFromFavoritesCites(cityItem) {
+  removeFromFavoritesCites(cityItem: ForecastSearchItem) {
     this.store.dispatch(new FavoritesActions.RemoveFromFavorites({ ...cityItem }));
   }
 

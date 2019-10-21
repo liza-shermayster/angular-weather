@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DailyForecast } from '../../forcast';
+import { DailyForecast } from '../../forecast.model';
 
 
 @Component({
@@ -13,14 +13,18 @@ export class CardWeatherComponent implements OnInit {
   imgUrl: string;
 
   ngOnInit() {
-    this.imgUrl = `https://developer.accuweather.com/sites/default/files/${this.getIconCode()}-s.png`;
+    this.imgUrl = this.getImageUrl();
   }
 
-  getIconCode() {
+  getImageUrl(): string {
+    return `https://developer.accuweather.com/sites/default/files/${this.getIconCode()}-s.png`;
+  }
+
+  getIconCode(): string {
     if (this.dayData.Day.Icon < 10) {
       return '0' + this.dayData.Day.Icon;
     }
-    return this.dayData.Day.Icon;
+    return String(this.dayData.Day.Icon);
   }
 
 }

@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Action, Store } from '@ngrx/store';
-import { Observable, from, of } from 'rxjs';
-import { map, switchMap, tap, mergeMap, take, catchError } from 'rxjs/operators';
-import { ForecastSearchItem } from 'src/app/forcast';
-import { AccuWeatherApiService } from '../../accu-weather-api.service';
-import * as fromApp from "../../store/app.reducer";
-import { GetSearchOptions, HomeActionTypes, SaveForecastData, SaveSearchData, SetCityItem, HomeErrors } from './home.actions';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Action } from '@ngrx/store';
+import { from, Observable, of } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { ForecastSearchItem } from 'src/app/forecast.model';
+import { AccuWeatherApiService } from '../../accu-weather-api.service';
+import { GetSearchOptions, HomeActionTypes, HomeErrors, SaveForecastData, SaveSearchData, SetCityItem } from './home.actions';
 
 
 

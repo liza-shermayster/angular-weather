@@ -9,7 +9,6 @@ import { environment } from '../environments/environment';
 import { AccuWeatherApiService } from './accu-weather-api.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FavoritesPageComponent } from './favorites-page/favorites-page.component';
 import { HomePageModule } from './home-page/home-page.module';
 import { HomeEffects } from './home-page/store/home.effects';
 import { MaterialModule } from './material';
@@ -31,8 +30,8 @@ import { FavoritesModule } from './favorites-page/favorites.module';
     StoreModule.forRoot(fromApp.appReducer),
     EffectsModule.forRoot([HomeEffects]),
     StoreDevtoolsModule.instrument({
-      maxAge: 25, // Retains last 25 states
-      logOnly: environment.production, // Restrict extension to log-only mode
+      maxAge: 25,
+      logOnly: environment.production,
     }),
     HomePageModule
   ],

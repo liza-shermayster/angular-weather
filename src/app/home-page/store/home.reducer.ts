@@ -1,5 +1,5 @@
 import { HomeActions, HomeActionTypes } from './home.actions';
-import { ForecastSearchItem, Forecast } from 'src/app/forcast';
+import { ForecastSearchItem, Forecast } from 'src/app/forecast.model';
 
 
 
