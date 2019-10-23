@@ -55,6 +55,7 @@ export class HomeEffects {
   @Effect()
   homeForecastData$: Observable<Action> = this.actions$.pipe(ofType(HomeActionTypes.SetCityItem),
     switchMap((setCityItem: SetCityItem) => {
+      console.log('setCity from effects', setCityItem);
       return this.serviceApi.getForecastData(setCityItem.payload.Key);
     }),
     map(data => new SaveForecastData(data))
@@ -81,16 +82,9 @@ export class HomeEffects {
 
 
   getSelectedCityFromInit() {
-    return of({ ...telAvivSearchData }).pipe(
-      map((data) => new SetCityItem(data)));
-  }
-
-  setInitCityGeolocation(): Observable<any> {
-    if ("geolocation" in navigator) {
-      this.getCityFromCoords();
-    } else {
-      return this.getSelectedCityFromInit();
-    }
+    return of(
+      { ...telAvivSearchData }).pipe(
+        map((data) => new SetCityItem(data)));
   }
 
   getCityFromCoords() {

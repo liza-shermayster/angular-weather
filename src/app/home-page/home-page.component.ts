@@ -24,7 +24,6 @@ export class HomePageComponent implements OnInit {
 
   constructor(
     private store: Store<fromApp.AppState>) {
-    this.store.dispatch(new HomeActions.InitHomeData());
   }
 
   ngOnInit() {
