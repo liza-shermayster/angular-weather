@@ -14,19 +14,17 @@ export class AccuWeatherApiService {
 
   getSearchResults(value: string) {
     const params = new HttpParams().set('q', value);
-    const apiSearch = `${BASE_URL}locations/v1/cities/autocomplete?apikey=	BfxNVAAFg5Svr2R3IiYzxAPqOUpu0c4t`;
+    const apiSearch = `${BASE_URL}locations/v1/cities/autocomplete?apikey=%09BfxNVAAFg5Svr2R3IiYzxAPqOUpu0c4t`;
     return this.http.get(apiSearch, { params });
   }
 
   getForecastData(key: string): Observable<Forecast> {
-    const apiForecastData = `${BASE_URL}forecasts/v1/daily/5day/
-      ${key}?apikey=%09BfxNVAAFg5Svr2R3IiYzxAPqOUpu0c4t`;
+    const apiForecastData = `${BASE_URL}forecasts/v1/daily/5day/${key}?apikey=%09BfxNVAAFg5Svr2R3IiYzxAPqOUpu0c4t`;
     return this.http.get<Forecast>(apiForecastData);
   }
 
   getCityFromGeoPosition(location) {
-    const localPosition = `${BASE_URL}locations/v1/cities/geoposition/
-    search?apikey=%09BfxNVAAFg5Svr2R3IiYzxAPqOUpu0c4t&${location}`;
+    const localPosition = `${BASE_URL}locations/v1/cities/geoposition/search?apikey=%09BfxNVAAFg5Svr2R3IiYzxAPqOUpu0c4t&q=${location}`;
     return this.http.get<ForecastSearchItem>(localPosition);
   }
 }

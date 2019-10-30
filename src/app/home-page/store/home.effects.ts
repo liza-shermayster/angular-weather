@@ -55,7 +55,6 @@ export class HomeEffects {
   @Effect()
   homeForecastData$: Observable<Action> = this.actions$.pipe(ofType(HomeActionTypes.SetCityItem),
     switchMap((setCityItem: SetCityItem) => {
-      console.log('setCity from effects', setCityItem);
       return this.serviceApi.getForecastData(setCityItem.payload.Key);
     }),
     map(data => new SaveForecastData(data))
@@ -65,7 +64,8 @@ export class HomeEffects {
   homeInitData$: Observable<Action> = this.actions$.pipe(
     ofType(HomeActionTypes.InitHomeData),
     switchMap(() => {
-      return this.getSelectedCityFromInit();
+      return this.getCityFromCoords();
+      // return this.getSelectedCityFromInit();
     }),
   );
   @Effect()
@@ -81,10 +81,10 @@ export class HomeEffects {
   ) { }
 
 
+
   getSelectedCityFromInit() {
     return of(
-      { ...telAvivSearchData }).pipe(
-        map((data) => new SetCityItem(data)));
+      { ...telAvivSearchData })
   }
 
   getCityFromCoords() {
@@ -94,12 +94,14 @@ export class HomeEffects {
     return from(prom).pipe(
       map((position: Position) => {
         const latitude = position.coords.latitude;
+
         const longitude = position.coords.longitude;
         return latitude + ',' + longitude;
       }),
       switchMap((coords: string) => {
         return this.serviceApi.getCityFromGeoPosition(coords);
       }),
+      catchError(() => this.getSelectedCityFromInit()),
       map((data) => new SetCityItem(data))
     );
   }

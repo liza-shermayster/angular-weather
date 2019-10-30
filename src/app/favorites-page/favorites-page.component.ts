@@ -30,8 +30,6 @@ export class FavoritesPageComponent implements OnInit {
 
   currentWeather(item) {
     this.store.dispatch(new HomeActions.SetCityItem({ ...item }));
-    console.log('item', item);
-
     this.router.navigate(['/home']);
   }
 }
